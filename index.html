@@ -4,35 +4,57 @@
     <meta charset="UTF-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <!-- <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha1/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-GLhlTQ8iRABdZLl6O3oVMWSktQOp6b7In1Zl3/Jr59b6EGGoI1aFkw7cmDA6j6gD" crossorigin="anonymous"> -->
-    <title>PHP ToDo List JSON</title>
-    <script src="https://unpkg.com/vue@3/dist/vue.global.js"></script>
-    <script src="https://cdn.jsdelivr.net/npm/axios/dist/axios.min.js"></script>
+    <title>Workshop TodoList</title>
+    <!--bootstrap-->
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha1/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-GLhlTQ8iRABdZLl6O3oVMWSktQOp6b7In1Zl3/Jr59b6EGGoI1aFkw7cmDA6j6gD" crossorigin="anonymous">
+    <!--fa-->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.2.1/css/all.min.css"
+    integrity="sha512-MV7K8+y+gLIBoVD59lQIYicR65iaqukzvf/nwasF0nqhPay5w/9lJmVM2hMDcnK1OnMGCdVK+iQrJ7lzPJQd1w=="
+    crossorigin="anonymous" referrerpolicy="no-referrer" />
+    <!--custom css-->
+    <link rel="stylesheet" href="src/css/style.css">
 </head>
 <body>
-    <div id="app" class="container-fluid">
-        <h1>{{message2}}</h1>
-        <form @submit.prevent="addTodo">
-            <div class="mb-3">
-                <label for="new_todo" class="form-label"></label>
-                <input type="text" class="form-control" id="new_todo" v-model="newTodo">
-            </div>
-            <button type="submit" class="btn btn-primary">Submit</button>
-        </form>
-        <h1>{{message}}</h1>
-        <div>
-            <ul>
-                <li v-for="(todo, i) in todo">
-                    <div>
-                        <h2>{{todo.text}}</h2>
-                        <button @click="getIndex(i)">Delete</button>
+    <div id="app">
+        <div class="container">
+            <form @submit.prevent="login" class="g-3 mt-2 me-0" v-if="!logged">
+                <label for="username">Username</label>
+                <input id="username" type="text" v-model="username">
+                <br><br>
+                <label for="password">Password</label>
+                <input id="password" type="password" v-model="password">
+                <br><br>
+                <button>Accedi</button>
+            </form>
+
+            <div v-if="logged">
+                <h1>TodoList</h1>
+                <ul>
+                    <li v-for="(todo, i) in todos">
+                        {{todo.text}}
+
+                        <button @click="removeTodo(i)">
+                            <i class="fa fa-trash"></i>
+                        </button>
+                    </li>
+                </ul>
+                <form @submit.prevent="addToDo" class="g-3 mt-2 me-0">
+                    <div class="d-inline-block">
+                        <label for="newtodo" class="visually-hidden">NewToDo</label>
+                        <input v-model="newToDo" type="text" class="text-newtodo" id="newtodo"
+                            placeholder="Inserisci elemento...">
                     </div>
-                </li>
-            </ul>
-            <div>{{current}}</div>
+                    <div class="d-inline-block">
+                        <button class="button-newtodo">Inserisci</button>
+                    </div>
+                </form>
+            </div>
         </div>
     </div>
-    
-    <script src="main.js"></script>
+    <!-- vuejs & axios-->
+    <script src="https://unpkg.com/vue@3/dist/vue.global.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/axios/1.3.1/axios.min.js" integrity="sha512-NbjaUHU8g0+Y8tMcRtIz0irSU3MjLlEdCvp82MqciVF4R2Ru/eaXHDjNSOvS6EfhRYbmQHuznp/ghbUvcC0NVw==" crossorigin="anonymous" referrerpolicy="no-referrer"></script>
+    <!-- main js-->
+    <script src="src/js/main.js"></script>
 </body>
 </html>
